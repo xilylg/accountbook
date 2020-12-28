@@ -1,5 +1,5 @@
 <?php
-class UserData extends AbstractData
+class DataUserModel extends AbstractData
 {
 	protected $table = 'user';
 	protected $db;

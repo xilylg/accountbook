@@ -111,9 +111,9 @@ class Database_Factory
 	}
 	
 	
-	public function __call($params) {
+	public function __call($method, $params) {
 		try {
-			return user_method_call(self::$connector, METHOD, $params);
+		    return user_method_call(self::$connector, $method, $params);
 		} catch(Exception $e) {
 			$log_msg = ['msg' => $e->getMessage(), 'sql' => self::$connector->sql, 'bind_params' => $this->self::$connector->bindParams];
 			if (is_object(self::$log)) {
