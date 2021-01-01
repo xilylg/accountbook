@@ -9,8 +9,9 @@ class BookModel extends AbstractModel
 		$this->bookData = new BookData($this->log);
 	}
 	
-	public function addBook($uid, $name, )
+	public function addBook($params)
 	{
-		return $this->userData->getUserByUid($uid);
+	    $result = $this->bookData->addOne($params);
+	    if 
 	}
 }

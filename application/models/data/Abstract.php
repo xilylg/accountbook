@@ -5,7 +5,7 @@ class AbstractData
 	protected $db;
 	protected $log;
 	protected $primaryKey; //表主键名
-	private $fields = [];
+	protected $fields = [];
 	
 	public function __construct($log) {
 		$this->log = $log;
@@ -23,21 +23,21 @@ class AbstractData
 	 * @return boolean
 	 */
 	private function _addOne(Array $data) {
-	    $this->db->table($this->table)->insert($data);
+	    return $this->db->table($this->table)->insert($data);
 	}
 	
 	private function _updateOne(Array $data) {
 	    if (empty($data[$this->primaryKey])) {
 	        return ['code' => 0, 'err_msg' => "invalid {$this->primaryKey} value"];
 	    }
-	    $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->update($data);
+	    return $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->update($data);
 	}
 	
 	private function _deleteOne(Array $data) {
 	    if (empty($data[$this->primaryKey])) {
 	        return ['code' => 0, 'err_msg' => "invalid {$this->primaryKey} value"];
 	    }
-	    $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->delete();
+	    return $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->delete();
 	}
 	
 	private function _findOne(Array $data) {
@@ -47,7 +47,7 @@ class AbstractData
 	        $conn->where($k, '=', $v, $rel);
 	        $rel = 'and';
 	    }
-	    $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->findOne();
+	    return $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->findOne();
 	}
 	
 	public function __call($method, $params) {
@@ -56,12 +56,9 @@ class AbstractData
 	        if (!Helper_Array::in_array($data_keys, $this->fields)) {
 	            throw new Exception("invalid fields");
 	        }
-	        call_user_func_array([$this, "_".$method], $params);
+	        return call_user_func_array([$this, "_".$method], $params);
 	    } else {
 	        throw new Exception("invalid method");
 	    }
 	}
-	
-	
-	
 }

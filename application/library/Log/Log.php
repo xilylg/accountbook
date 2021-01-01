@@ -8,7 +8,7 @@ class Log_Log
 	protected $separator;
 	protected $path = "";
 	
-	public function __construct($path, $separator = "`", $level = '') 
+	public function __construct($path, $separator = "|", $level = '') 
 	{
 		$this->separator = $separator;
 		$this->path = $path;

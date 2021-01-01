@@ -6,12 +6,18 @@ class ApiController extends AbstractController
 	
 	public function init()
 	{
-		
+		parent::init();
+	}
+	
+	public function getCommonParams()
+	{
+	    parent::getCommonParams();
+	    $this->params['userinfo'] = $this->getCurrentUserinfo();
+	    $this->params['uid'] = $this->params['userinfo']['uid'];
 	}
 	
 	private function login()
 	{
-		
 		if ($this->login == 1) {
 			
 		}

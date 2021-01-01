@@ -68,7 +68,7 @@ class Dispatcher
         $action = CONFIG_DEFAULT_ACTION;
         if (! empty($path)) {
             $action = str_replace(' ', '', ucwords(str_replace('_', ' ', $path)));
-            $action{0} = strtolower($action{0});
+            $action[0] = strtolower($action[0]);
         }
         return $action;
     }
