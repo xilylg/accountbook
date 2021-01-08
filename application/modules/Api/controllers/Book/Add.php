@@ -11,10 +11,10 @@ class Book_AddController extends ApiController
         'cycle_end' => 'string|required',
     ];
     
-    public function AddAction() {
+    public function indexAction() {
         $log = new Log_Log(LOG_PATH);
         $bookmodel = new BookModel($log);
-        $result = $bookmodel->addBook($this->params);
+        $result = $bookmodel->addOne($this->params);
         return $this->success($result);
     }
 }
