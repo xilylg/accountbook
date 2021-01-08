@@ -2,10 +2,12 @@
 class ApiController extends AbstractController
 {
 	//0无须检查登录，1必须登录
-	protected  $login = 1;
+	protected $login = 1;
+	protected $log;
 	
 	public function init()
 	{
+	    $this->log = new Log_Log(LOG_PATH);
 		parent::init();
 	}
 	

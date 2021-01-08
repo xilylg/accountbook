@@ -5,10 +5,4 @@ class BookModel extends AbstractModel
 	    parent::__construct($log);
 		$this->datamodel = new BookData($this->log);
 	}
-	
-	
-	public function getBooksByUid($uid)
-	{
-	    return $this->datamodel->_findOne(['uid' => $uid]);
-	}
 }

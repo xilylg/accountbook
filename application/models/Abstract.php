@@ -11,18 +11,34 @@ class AbstractModel
     
     public function addOne($params)
     {
+        $params['create_time'] = time();
         $result = $this->datamodel->addOne($params);
         return $result;
     }
     
     public function updateOne($params)
     {
+        $params['update_time'] = time();
         return $this->datamodel->updateOne($params);
     }
     
     public function deleteOne($id)
     {
-        return $this->datamodel->_deleteOne($this->datamodel->primaryKey, $id);
+        return $this->datamodel->deleteOne($this->datamodel->primaryKey, $id);
+    }
+    
+    public function findOne($id)
+    {
+        return $this->datamodel->findOne([
+            $this->datamodel->primaryKey => $id
+        ]);
+    }
+    
+    public function getListByUid($uid)
+    {
+        return $this->datamodel->find([
+            'uid' => $uid
+        ]);
     }
     
 }

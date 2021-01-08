@@ -9,8 +9,13 @@ class AbstractData
 	
 	public function __construct($log) {
 		$this->log = $log;
+		$this->table = Helper_Conf::get("database.table_pre") . "_" . $this->table;
 		$connectParams = Helper_Conf::get("application.PdoMysql");
 		$this->db = Database_Factory::instanct( Helper_Conf::get("database.type"), $connectParams, $log,  Helper_Conf::get("database.table_pre"));
+	}
+	
+	public function setTable($table) {
+	    $this->table = Helper_Conf::get("database.table_pre") . "_" . $table;
 	}
 	
 	public function setPrimaryKey($primaryKey) {
@@ -47,7 +52,17 @@ class AbstractData
 	        $conn->where($k, '=', $v, $rel);
 	        $rel = 'and';
 	    }
-	    return $this->db->table($this->table)->where($this->primaryKey, "=", $data[$this->primaryKey])->findOne();
+	    return $conn->findOne();
+	}
+	
+	private function _find(Array $data) {
+	    $conn = $this->db->table($this->table);
+	    $rel = "";
+	    foreach($data as $k => $v) {
+	        $conn->where($k, '=', $v, $rel);
+	        $rel = 'and';
+	    }
+	    return $conn->query();
 	}
 	
 	public function __call($method, $params) {

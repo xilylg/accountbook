@@ -12,9 +12,8 @@ class Book_AddController extends ApiController
     ];
     
     public function indexAction() {
-        $log = new Log_Log(LOG_PATH);
-        $bookmodel = new BookModel($log);
-        $result = $bookmodel->addOne($this->params);
+        $bookModel = new BookModel($this->log);
+        $result = $bookModel->addOne($this->params);
         return $this->success($result);
     }
 }
