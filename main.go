@@ -1,10 +1,6 @@
 package main
 
 import (
-	"io"
-	"os"
-
-	"github.com/gin-gonic/gin"
 	"github.com/xilylg/accountbook/conf"
 	"github.com/xilylg/accountbook/dao"
 	"github.com/xilylg/accountbook/log"
@@ -21,8 +17,8 @@ func main() {
 	validator.Init()
 	service.Init()
 
-	f, _ := os.Create(conf.SysConf.Base.RootPath + "/gin.log")
-	gin.DefaultWriter = io.MultiWriter(f)
+	// f, _ := os.Create(conf.SysConf.Base.RootPath + "/gin.log")
+	// gin.DefaultWriter = io.MultiWriter(f)
 
 	rt := router.Init()
 
