@@ -1,0 +1,4 @@
+{
+    "go.docsTool": "gogetdoc",
+    "go.useLanguageServer": false
+}
