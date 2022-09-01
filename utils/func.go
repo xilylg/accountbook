@@ -7,6 +7,8 @@ import (
 	"math/rand"
 	"net"
 	"os"
+	"path"
+	"runtime"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -54,4 +56,16 @@ func GetTraceIdFromCtx(c *gin.Context) string {
 //检测端口号是否已经被占用
 func CheckSysPort(port string) bool {
 	return true
+}
+
+func GetCallerInfo(skip int) (info string) {
+	pc, file, lineNo, ok := runtime.Caller(skip)
+	if !ok {
+
+		info = "runtime.Caller() failed"
+		return
+	}
+	funcName := runtime.FuncForPC(pc).Name()
+	fileName := path.Base(file) // Base函数返回路径的最后一个元素
+	return fmt.Sprintf("func:%s, file:%s, line:%d ", funcName, fileName, lineNo)
 }

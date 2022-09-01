@@ -1,8 +1,9 @@
 package database
 
 import (
+	"encoding/json"
 	"fmt"
-	"log"
+	rawlog "log"
 	"os"
 	"time"
 
@@ -11,6 +12,10 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"gorm.io/plugin/dbresolver"
+
+	"github.com/gin-gonic/gin"
+	"github.com/xilylg/accountbook/log"
+	"github.com/xilylg/accountbook/utils"
 )
 
 type DatabaseHostConf struct {
@@ -62,7 +67,7 @@ func conn(conf *DatabaseConf) (*gorm.DB, error) {
 	}
 	file, _ := os.OpenFile(conf.Logfile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	newLogger := logger.New(
-		log.New(file, "\r\n", log.LstdFlags), // io writer
+		rawlog.New(file, "\r\n", rawlog.LstdFlags), // io writer
 		logger.Config{
 			SlowThreshold:             time.Second,   // Slow SQL threshold
 			LogLevel:                  logger.Silent, // Log level
@@ -119,4 +124,16 @@ func MysqlConn(conf *DatabaseConf) (string, []gorm.Dialector, []gorm.Dialector) 
 	}
 
 	return mDsn0, Sources, Replicas
+}
+
+func ProcErrorLog(c *gin.Context, rst *gorm.DB, valObj interface{}) bool {
+	if rst.Error == nil {
+		return false
+	}
+	val, err := json.Marshal(valObj)
+	if err != nil {
+		log.Error(c, "database.json", rst.Error.Error())
+	}
+	log.Error(c, "database", rst.Error.Error()+" value:"+string(val)+utils.GetCallerInfo(2))
+	return true
 }

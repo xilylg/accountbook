@@ -30,60 +30,60 @@ type LogConf struct {
 var Logger *LogConf
 
 type LogInterface interface {
-	Debug(*gin.Context, string, map[string]interface{})
-	Info(*gin.Context, string, map[string]interface{})
-	Notice(*gin.Context, string, map[string]interface{})
-	Warn(*gin.Context, string, map[string]interface{})
-	Error(*gin.Context, string, map[string]interface{})
+	Debug(*gin.Context, string, interface{})
+	Info(*gin.Context, string, interface{})
+	Notice(*gin.Context, string, interface{})
+	Warn(*gin.Context, string, interface{})
+	Error(*gin.Context, string, interface{})
 }
 
 func Init(logConf *LogConf) {
 	Logger = logConf
 }
 
-func Access(c *gin.Context, tag string, data map[string]interface{}) {
+func Access(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > ACCESS {
 		return
 	}
 	writeFile(c, "ACCESS", ACCESS, tag, data)
 }
 
-func Debug(c *gin.Context, tag string, data map[string]interface{}) {
+func Debug(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > DEBUG {
 		return
 	}
 	writeFile(c, "DEBUG", DEBUG, tag, data)
 }
 
-func Notice(c *gin.Context, tag string, data map[string]interface{}) {
+func Notice(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > NOTICE {
 		return
 	}
 	writeFile(c, "NOTICE", NOTICE, tag, data)
 }
 
-func Info(c *gin.Context, tag string, data map[string]interface{}) {
+func Info(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > INFO {
 		return
 	}
 	writeFile(c, "INFO", INFO, tag, data)
 }
 
-func Warn(c *gin.Context, tag string, data map[string]interface{}) {
+func Warn(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > WARN {
 		return
 	}
 	writeFile(c, "WARN", WARN, tag, data)
 }
 
-func Error(c *gin.Context, tag string, data map[string]interface{}) {
+func Error(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > ERROR {
 		return
 	}
 	writeFile(c, "ERROR", ERROR, tag, data)
 }
 
-func Panic(c *gin.Context, tag string, data map[string]interface{}) {
+func Panic(c *gin.Context, tag string, data interface{}) {
 	if Logger.Level > ERROR {
 		return
 	}
@@ -91,14 +91,14 @@ func Panic(c *gin.Context, tag string, data map[string]interface{}) {
 }
 
 //指定写入的文件名与日志等级,方便以后灵活调用
-func LogFile(c *gin.Context, fileName string, level int, tag string, data map[string]interface{}) {
+func LogFile(c *gin.Context, fileName string, level int, tag string, data interface{}) {
 	if Logger.Level > level {
 		return
 	}
 	writeFile(c, fileName, level, tag, data)
 }
 
-func writeFile(c *gin.Context, fileName string, level int, tag string, data map[string]interface{}) error {
+func writeFile(c *gin.Context, fileName string, level int, tag string, data interface{}) error {
 	var buf strings.Builder
 
 	buf.WriteString(time.Now().Format("2006-01-02 15:04:05"))

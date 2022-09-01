@@ -13,11 +13,11 @@ func frontRouter(r *gin.Engine) {
 		memberC := new(front.MemberC)
 		member := r.Group("/member")
 		{
-			member.POST("/", memberC.Add)
-			// member.PUT("/:mid", memberC.Update)
-			// member.GET("/list", memberC.List)
-			// member.GET("/:mid", memberC.One)
-			// member.DELETE("/:mid", memberC.Delete)
+			member.POST("", memberC.Add)
+			member.PUT("/:mid", memberC.Update)
+			member.GET("/list/:page", memberC.List)
+			member.GET("/:mid", memberC.One)
+			member.DELETE("/:mid", memberC.Delete)
 		}
 		// accountbookC := new
 		// accountbook := front.Group("/accountbook")

@@ -8,7 +8,7 @@ import (
 func Init(sysConf *conf.SystemConf) {
 	_, err := database.Init(sysConf.Database)
 	if err != nil {
-		panic("database init fail")
+		panic("database init fail" + err.Error())
 	}
 	// todo 初始化缓存
 

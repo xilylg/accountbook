@@ -34,6 +34,6 @@ func RequestOutLog(c *gin.Context) {
 		"method":    c.Request.Method,
 		"args":      c.Request.PostForm,
 		"from":      c.ClientIP(),
-		"proc_time": endExecTime.Sub(startExecTime).Nanoseconds() / 1000,
+		"proc_time": endExecTime.Sub(startExecTime).Microseconds(),
 	})
 }
