@@ -13,7 +13,7 @@ type Member struct {
 
 // 添加请求
 type MemberAddReq struct {
-	Uid      int64  `form:"uid" binding:"required,numeric"`
+	Uid      int64  `form:"uid"`
 	Nickname string `form:"nickname" binding:"required"`
 	Relation string `form:"relation"`
 }

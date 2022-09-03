@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"os"
 
@@ -17,16 +16,16 @@ import (
 
 func main() {
 	//gin.ReleaseMode
-	gin.SetMode(gin.DebugMode)
+	//gin.SetMode(gin.DebugMode)
 
 	conf.Init()
 	log.Init(conf.SysConf.Log)
-	defer func() {
-		if err := recover(); err != nil { //注意必须要判断
-			log.Panic(nil, "recover", err)
-			fmt.Printf("%s\n", err)
-		}
-	}() //用来调用此匿名函数
+	// defer func() {
+	// 	if err := recover(); err != nil { //注意必须要判断
+	// 		log.Panic(nil, "recover", err)
+	// 		fmt.Printf("%s\n", err)
+	// 	}
+	// }() //用来调用此匿名函数
 
 	dao.Init(conf.SysConf)
 	service.Init()

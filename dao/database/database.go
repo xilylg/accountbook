@@ -53,8 +53,13 @@ func Init(dbConf *DatabaseConf) (*DbServiceSrt, error) {
 	DbService.Db = db
 
 	//初始化各表服务
-	//User = registerUser(db)
 	Member = registerMember(db)
+	Book = registerBook(db)
+	Item = registerItem(db)
+	Target = registerTarget(db)
+	Flow = registerFlow(db)
+	User = registerUser(db)
+
 	return DbService, nil
 }
 
@@ -133,6 +138,7 @@ func ProcErrorLog(c *gin.Context, rst *gorm.DB, valObj interface{}) bool {
 	val, err := json.Marshal(valObj)
 	if err != nil {
 		log.Error(c, "database.json", rst.Error.Error())
+		return true
 	}
 	log.Error(c, "database", rst.Error.Error()+" value:"+string(val)+utils.GetCallerInfo(2))
 	return true

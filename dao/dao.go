@@ -14,4 +14,9 @@ func Init(sysConf *conf.SystemConf) {
 
 	//初始化各服务
 	Member = new(MemberDao)
+	Book = new(BookDao)
+	Item = new(ItemDao)
+	Target = new(TargetDao)
+	Flow = new(FlowDao)
+	User = new(UserDao)
 }
